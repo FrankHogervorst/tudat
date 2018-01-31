@@ -194,7 +194,7 @@ void getFinalStateForExactHybridVariableTerminationCondition(
             if( !timesAreSet )
             {
                 minimumTimeStep = currentFinalTimeStep;
-                maximumTimeStep = currentFinalTimeStep;
+                minimumTimeIndex = i;
                 timesAreSet = true;
             }
             else
@@ -557,7 +557,7 @@ boost::shared_ptr< PropagationTerminationDetails > integrateEquationsFromIntegra
                 if( propagationTerminationCondition->getTerminationType( ) != hybrid_stopping_condition )
                 {
                     propagationTerminationReason = boost::make_shared< PropagationTerminationDetails >(
-                            termination_condition_reached,
+                                termination_condition_reached,
                                 propagationTerminationCondition->getTerminateExactlyOnFinalCondition( ) );
                 }
                 else
