@@ -375,13 +375,13 @@ public:
             dependentVariablesFunctions_ = dependentVariableData.first;
             dependentVariableIds_ = dependentVariableData.second;
 
-            if( propagatorSettings_->getDependentVariablesToSave( )->printDependentVariableTypes_ )
-            {
-                std::cout << "Dependent variables being saved, output vectors contain: " << std::endl
-                          << "Vector entry, Vector contents" << std::endl;
-                utilities::printMapContents(
-                            dependentVariableIds_ );
-            }
+//            if( propagatorSettings_->getDependentVariablesToSave( )->printDependentVariableTypes_ )
+//            {
+//                std::cout << "Dependent variables being saved, output vectors contain: " << std::endl
+//                          << "Vector entry, Vector contents" << std::endl;
+//                utilities::printMapContents(
+//                            dependentVariableIds_ );
+//            }
         }
 
         stateDerivativeFunction_ =
