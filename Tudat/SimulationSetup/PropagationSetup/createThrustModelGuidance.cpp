@@ -466,4 +466,3 @@ void resetThrustMagnitudeAndDirectionTime(
 }
 
 }
-
