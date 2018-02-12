@@ -1,4 +1,4 @@
-/*    Copyright (c) 2010-2017, Delft University of Technology
+/*    Copyright (c) 2010-2018, Delft University of Technology
  *    All rigths reserved
  *
  *    This file is part of the Tudat. Redistribution and use in source and
@@ -98,9 +98,9 @@ public:
         }
     }
 
-    //! Function for calculating the partial of the acceleration w.r.t. the velocity of body undergoing acceleration..
+    //! Function for calculating the partial of the acceleration w.r.t. the position of body undergoing acceleration..
     /*!
-     *  Function for calculating the partial of the acceleration w.r.t. the velocity of body undergoing acceleration and
+     *  Function for calculating the partial of the acceleration w.r.t. the position of body undergoing acceleration and
      *  adding it to the existing partial block.
      *  The update( ) function must have been called during current time step before calling this function.
      *  \param partialMatrix Block of partial derivatives of acceleration w.r.t. Cartesian position of body

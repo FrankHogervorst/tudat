@@ -1,4 +1,4 @@
-/*    Copyright (c) 2010-2017, Delft University of Technology
+/*    Copyright (c) 2010-2018, Delft University of Technology
  *    All rigths reserved
  *
  *    This file is part of the Tudat. Redistribution and use in source and
@@ -245,22 +245,22 @@ public:
     {
         if( loveNumbers_.size( ) > static_cast< unsigned int >( degree - 2 ) )
         {
-            if( loveNumbers.size( ) <= static_cast< unsigned int >( degree ) )
+            if( loveNumbers.size( ) <= static_cast< unsigned int >( degree + 1 ) )
             {
                 loveNumbers_[ degree - 2 ] = loveNumbers;
             }
             else
             {                               
                 std::string errorMessage = "Error, tried to set love numbers at degree " +
-                        boost::lexical_cast< std::string >( degree ) + " in BasicSolidBodyTideGravityFieldVariations with" +
-                        boost::lexical_cast< std::string >( loveNumbers.size( ) ) + " orders";
+                        std::to_string( degree ) + " in BasicSolidBodyTideGravityFieldVariations with" +
+                        std::to_string( loveNumbers.size( ) ) + " orders";
                 throw std::runtime_error( errorMessage );
             }
         }
         else
         {
             std::string errorMessage = "Error, tried to set love numbers at degree " +
-                    boost::lexical_cast< std::string >( degree ) +
+                    std::to_string( degree ) +
                     " in BasicSolidBodyTideGravityFieldVariations: not available";
             throw std::runtime_error( errorMessage );
         }

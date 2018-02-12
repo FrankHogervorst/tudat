@@ -1,4 +1,4 @@
-/*    Copyright (c) 2010-2017, Delft University of Technology
+/*    Copyright (c) 2010-2018, Delft University of Technology
  *    All rigths reserved
  *
  *    This file is part of the Tudat. Redistribution and use in source and
@@ -30,7 +30,6 @@
 #ifndef TUDAT_CONVERT_MEAN_ANOMALY_TO_ECCENTRIC_ANOMALY_H
 #define TUDAT_CONVERT_MEAN_ANOMALY_TO_ECCENTRIC_ANOMALY_H
 
-#include <boost/exception/all.hpp>
 #include <boost/bind.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
@@ -272,16 +271,11 @@ ScalarType convertMeanAnomalyToEccentricAnomaly(
             eccentricAnomaly = bisectionRootfinder->execute( rootFunction, initialGuess );
         }
     }
-
     //  Eccentricity is invalid: eccentricity < 0.0 or eccentricity >= 1.0.
     else
     {
-        boost::throw_exception(
-                    std::runtime_error(
-                        boost::str( boost::format(
-                                        "Invalid eccentricity. Valid range is 0.0 <= e < 1.0. "
-                                        "Eccentricity was: '%f'." )
-                                    % eccentricity ) ) );
+        throw std::runtime_error( "Invalid eccentricity. Valid range is 0.0 <= e < 1.0. Eccentricity was: " +
+                            std::to_string( eccentricity ) );
     }
 
     // Return eccentric anomaly.
@@ -424,13 +418,8 @@ ScalarType convertMeanAnomalyToHyperbolicEccentricAnomaly(
     // In this case the orbit is not hyperbolic.
     else
     {
-        boost::throw_exception(
-                    std::runtime_error(
-                        boost::str(
-                            boost::format(
-                                "Invalid eccentricity. Valid range is e > 1.0."
-                                "Eccentricity was: '%f'." )
-                            % eccentricity ) ) );
+        throw std::runtime_error( "Invalid eccentricity. Valid range is e > 1.0. Eccentricity was: " +
+                            std::to_string( eccentricity ) );
     }
 
     // Return hyperbolic eccentric anomaly.

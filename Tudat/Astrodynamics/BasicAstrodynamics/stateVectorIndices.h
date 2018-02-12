@@ -1,4 +1,4 @@
-/*    Copyright (c) 2010-2017, Delft University of Technology
+/*    Copyright (c) 2010-2018, Delft University of Technology
  *    All rigths reserved
  *
  *    This file is part of the Tudat. Redistribution and use in source and
@@ -72,22 +72,6 @@ enum UnifiedStateModelElementIndices
     epsilon2QuaternionIndex = 4,
     epsilon3QuaternionIndex = 5,
     etaQuaternionIndex = 6
-};
-
-//! Cartesian acceleration indices.
-enum CartesianAccelerationElementIndices
-{
-    xCartesianAccelerationIndex,
-    yCartesianAccelerationIndex,
-    zCartesianAccelerationIndex
-};
-
-//! Acceleration indices in CSN frame for orbital elements.
-enum CSNAccelerationElementIndices
-{
-    cAccelerationIndex,
-    sAccelerationIndex,
-    nAccelerationIndex
 };
 
 } // namespace orbital_element_conversions

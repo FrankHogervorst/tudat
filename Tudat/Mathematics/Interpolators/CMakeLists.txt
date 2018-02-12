@@ -1,4 +1,4 @@
- #    Copyright (c) 2010-2017, Delft University of Technology
+ #    Copyright (c) 2010-2018, Delft University of Technology
  #    All rigths reserved
  #
  #    This file is part of the Tudat. Redistribution and use in source and
@@ -23,6 +23,8 @@ set(INTERPOLATORS_HEADERS
   "${SRCROOT}${MATHEMATICSDIR}/Interpolators/lookupScheme.h"
   "${SRCROOT}${MATHEMATICSDIR}/Interpolators/oneDimensionalInterpolator.h"
   "${SRCROOT}${MATHEMATICSDIR}/Interpolators/multiLinearInterpolator.h"
+  "${SRCROOT}${MATHEMATICSDIR}/Interpolators/piecewiseConstantInterpolator.h"
+  "${SRCROOT}${MATHEMATICSDIR}/Interpolators/jumpDataLinearInterpolator.h"
   "${SRCROOT}${MATHEMATICSDIR}/Interpolators/createInterpolator.h"
 )
 

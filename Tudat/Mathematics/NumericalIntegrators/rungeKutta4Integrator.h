@@ -1,4 +1,4 @@
-/*    Copyright (c) 2010-2017, Delft University of Technology
+/*    Copyright (c) 2010-2018, Delft University of Technology
  *    All rigths reserved
  *
  *    This file is part of the Tudat. Redistribution and use in source and
@@ -140,7 +140,7 @@ public:
             // Check if propagation should terminate because the propagation termination condition has been reached
             // while computing k1, k2, k3 or k4. If so, return immediately the current state (not recomputed yet),
             // which will be discarded.
-            if ( this->propagationTerminationFunction_( static_cast< double >( time ) ) )
+            if ( this->propagationTerminationFunction_( static_cast< double >( time ), TUDAT_NAN ) )
             {
                 this->propagationTerminationConditionReachedDuringStep_ = true;
                 return currentState_;
@@ -173,6 +173,26 @@ public:
         currentIndependentVariable_ = lastIndependentVariable_;
         currentState_ = lastState_;
         return true;
+    }
+
+    //! Get previous independent variable.
+    /*!
+     * Returns the previoius value of the independent variable of the integrator.
+     * \return Previous independent variable.
+     */
+    IndependentVariableType getPreviousIndependentVariable( )
+    {
+        return lastIndependentVariable_;
+    }
+
+    //! Get previous state value.
+    /*!
+     * Returns the previous value of the state.
+     * \return Previous state
+     */
+    StateType getPreviousState( )
+    {
+        return lastState_;
     }
 
     //! Modify the state at the current value of the independent variable.

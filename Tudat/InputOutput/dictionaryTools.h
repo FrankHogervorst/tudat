@@ -1,4 +1,4 @@
-/*    Copyright (c) 2010-2017, Delft University of Technology
+/*    Copyright (c) 2010-2018, Delft University of Technology
  *    All rigths reserved
  *
  *    This file is part of the Tudat. Redistribution and use in source and
@@ -16,7 +16,6 @@
 #include <set>
 #include <stdexcept>
 
-#include <boost/exception/all.hpp>
 #include <boost/function.hpp>
 #include <boost/shared_ptr.hpp>
 
@@ -133,11 +132,9 @@ DataType extractParameterValue( const DataLineIterator& firstDataLine,
         // in the input stream.
         if ( ( *dictionaryEntry )->isRequired )
         {
-            boost::throw_exception(
-                        boost::enable_error_info(
-                            std::runtime_error(
-                                "Required parameter \"" + ( *dictionaryEntry )->parameterName
-                                + "\" not found in input stream! " ) ) );
+           throw std::runtime_error(
+                                "Required parameter " + ( *dictionaryEntry )->parameterName
+                                + " not found in input stream! "  );
         }
 
         // Else, return the default value specified.

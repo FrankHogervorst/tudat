@@ -1,4 +1,4 @@
-/*    Copyright (c) 2010-2017, Delft University of Technology
+/*    Copyright (c) 2010-2018, Delft University of Technology
  *    All rigths reserved
  *
  *    This file is part of the Tudat. Redistribution and use in source and
@@ -38,10 +38,12 @@ void createStateTransitionAndSensitivityMatrixInterpolator(
             boost::make_shared< interpolators::LagrangeInterpolator< double, Eigen::MatrixXd > >(
                 utilities::createVectorFromMapKeys< Eigen::MatrixXd, double >( variationalEquationsSolution[ 1 ] ),
                 utilities::createVectorFromMapValues< Eigen::MatrixXd, double >( variationalEquationsSolution[ 1 ] ), 4 );
+
     if( clearRawSolution )
     {
         variationalEquationsSolution[ 1 ].clear( );
     }
+
 }
 
 }

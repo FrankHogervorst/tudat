@@ -1,4 +1,4 @@
-/*    Copyright (c) 2010-2017, Delft University of Technology
+/*    Copyright (c) 2010-2018, Delft University of Technology
  *    All rigths reserved
  *
  *    This file is part of the Tudat. Redistribution and use in source and
@@ -49,8 +49,8 @@ KeplerEphemeris::KeplerEphemeris(
     }
     else
     {
-        boost::throw_exception( std::runtime_error( boost::str( boost::format(
-            "Error, Kepler ephemeris cannot handle parabolic orbit" ) ) ) );
+        throw std::runtime_error(
+            "Error, Kepler ephemeris cannot handle parabolic orbit" );
     }
 
     // Convert initial true anomaly to mean anomaly.

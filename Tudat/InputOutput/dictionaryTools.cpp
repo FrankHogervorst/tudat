@@ -1,4 +1,4 @@
-/*    Copyright (c) 2010-2017, Delft University of Technology
+/*    Copyright (c) 2010-2018, Delft University of Technology
  *    All rigths reserved
  *
  *    This file is part of the Tudat. Redistribution and use in source and
@@ -63,9 +63,7 @@ void checkRequiredParameters( const DictionaryPointer& aDictionary )
         missingRequiredParametersMessage << "\"" << ( *lastIterator )->parameterName << "\".";
 
         // Thrown exception based on constructed error message.
-        boost::throw_exception(
-                    boost::enable_error_info(
-                        std::runtime_error( missingRequiredParametersMessage.str( ) ) ) );
+        throw std::runtime_error( missingRequiredParametersMessage.str( ) );
     }
 }
 
@@ -90,8 +88,7 @@ DictionaryIterator findEntry( const DictionaryPointer dictionary,
 
     if ( iteratorDictionary == dictionary->end( ) )
     {
-        boost::throw_exception( boost::enable_error_info(
-                                    std::runtime_error( errorMessage.str( ) ) ) );
+        throw std::runtime_error( errorMessage.str( ) );
     }
 
     return iteratorDictionary;

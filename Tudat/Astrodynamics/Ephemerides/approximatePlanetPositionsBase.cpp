@@ -1,4 +1,4 @@
-/*    Copyright (c) 2010-2017, Delft University of Technology
+/*    Copyright (c) 2010-2018, Delft University of Technology
  *    All rigths reserved
  *
  *    This file is part of the Tudat. Redistribution and use in source and
@@ -12,12 +12,6 @@
  *          http://ssd.jpl.nasa.gov/txt/aprx_pos_planets.pdf, last accessed: 24 February, 2011.
  *
  */
-
-#include <iostream>
-
-#include <boost/exception/all.hpp>
-#include <boost/format.hpp>
-#include <boost/throw_exception.hpp>
 
 #include "Tudat/Astrodynamics/Ephemerides/approximatePlanetPositionsBase.h"
 #include "Tudat/InputOutput/basicInputOutput.h"
@@ -146,7 +140,7 @@ void ApproximatePlanetPositionsBase::parseExtraTermsEphemerisLineData_(
     ephemerisLineData_.clear( );
 
     // Read second line of data.
-    ephemerisLineData_<< containerOfDataFromEphemerisFile_[ lineNumber ];
+    ephemerisLineData_ << containerOfDataFromEphemerisFile_[ lineNumber ];
 
     ephemerisLineData_ >> approximatePlanetPositionsDataContainer_.planetName_;
     ephemerisLineData_ >> approximatePlanetPositionsDataContainer_.additionalTermB_;
@@ -166,14 +160,8 @@ void ApproximatePlanetPositionsBase::reloadData( )
     std::ifstream ephemerisFile_( filePath_.c_str( ) );
     if ( ephemerisFile_.fail( ) )
     {
-        boost::throw_exception(
-                    boost::enable_error_info(
-                        std::runtime_error(
-                            boost::str( boost::format( "Data file '%s' could not be opened." )
-                                 % filePath_.c_str( ) ) ) )
-            << boost::errinfo_file_name( filePath_.c_str( ) )
-            << boost::errinfo_file_open_mode( "std::ios::binary" )
-            << boost::errinfo_api_function( "std::ifstream::open" ) );
+        throw std::runtime_error(
+                    "Data file could not be opened:" + filePath_ );
     }
 
     // Read the file into a container.

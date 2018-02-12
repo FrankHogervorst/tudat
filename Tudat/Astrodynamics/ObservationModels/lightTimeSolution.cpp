@@ -1,4 +1,4 @@
-/*    Copyright (c) 2010-2017, Delft University of Technology
+/*    Copyright (c) 2010-2018, Delft University of Technology
  *    All rigths reserved
  *
  *    This file is part of the Tudat. Redistribution and use in source and
@@ -8,8 +8,6 @@
  *    http://tudat.tudelft.nl/LICENSE.
  */
 
-
-#include <iostream>
 
 #include "Tudat/Astrodynamics/BasicAstrodynamics/physicalConstants.h"
 
@@ -23,31 +21,18 @@ namespace observation_models
 
 //! Function to retrieve the default tolerance for the light-time equation solution.
 template< >
-double getDefaultLightTimeTolerance< double, double >( )
+double getDefaultLightTimeTolerance< double >( )
 {
     return 1.0E-12;
 }
 
 //! Function to retrieve the default tolerance for the light-time equation solution.
 template< >
-long double getDefaultLightTimeTolerance< long double, long double >( )
+long double getDefaultLightTimeTolerance< long double >( )
 {
     return 1.0E-15L;
 }
 
-//! Function to retrieve the default tolerance for the light-time equation solution.
-template< >
-double getDefaultLightTimeTolerance< double, long double >( )
-{
-    return 1.0E-12;
-}
-
-//! Function to retrieve the default tolerance for the light-time equation solution.
-template< >
-long double getDefaultLightTimeTolerance< long double, double >( )
-{
-    return 1.0E-12L;
-}
 
 } // namespace observation_models
 } // namespace tudat

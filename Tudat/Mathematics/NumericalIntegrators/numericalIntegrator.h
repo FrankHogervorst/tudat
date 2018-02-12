@@ -1,4 +1,4 @@
-/*    Copyright (c) 2010-2017, Delft University of Technology
+/*    Copyright (c) 2010-2018, Delft University of Technology
  *    All rigths reserved
  *
  *    This file is part of the Tudat. Redistribution and use in source and
@@ -99,6 +99,28 @@ public:
      */
     virtual bool rollbackToPreviousState( ) = 0;
 
+    //! Get previous independent variable.
+    /*!
+     * Returns the previoius value of the independent variable of the integrator. Derived classes
+     * should override this and provide the computed independent variable. If not implemented, throws error.
+     * \return Previous independent variable.
+     */
+    virtual IndependentVariableType getPreviousIndependentVariable( )
+    {
+        throw std::runtime_error( "Function getPreviousIndependentVariable not implemented in this integrator" );
+    }
+
+    //! Get previous state value.
+    /*!
+     * Returns the previous value of the state. Derived classes
+     * should override this and provide the computed state. If not implemented, throws error.
+     * \return Previous state
+     */
+    virtual StateType getPreviousState( )
+    {
+        throw std::runtime_error( "Function getPreviousState not implemented in this integrator" );
+    }
+
     //! Perform an integration to a specified independent variable value.
     /*!
      * Performs an integration to independentVariableEnd with initial state and initial independent
@@ -155,10 +177,18 @@ public:
      *  \param terminationFunction Function that returns true if termination condition is reached, false if it has not,
      *  as a function of current time.
      */
-    void setPropagationTerminationFunction( boost::function< bool( const double ) > terminationFunction )
+    void setPropagationTerminationFunction( boost::function< bool( const double, const double ) > terminationFunction )
     {
         propagationTerminationFunction_ = terminationFunction;
     }
+
+    //! Function to toggle the use of step-size control
+    /*!
+     * Function to toggle the use of step-size control To be implemented in derived classes with variable step sizes
+     * \param useStepSizeControl Boolean denoting whether step size control is to be used
+     */
+    virtual void setStepSizeControl( const bool useStepSizeControl )
+    { }
 
 protected:
 
@@ -169,7 +199,8 @@ protected:
     StateDerivativeFunction stateDerivativeFunction_;
 
     //! Boolean to denote whether the propagation termination condition was reached during the evaluation of one of the sub-steps
-    /*! Boolean to denote whether the propagation termination condition was reached during the evaluation of one of the sub-steps
+    /*!
+     *  Boolean to denote whether the propagation termination condition was reached during the evaluation of one of the sub-steps
      *  necessary to perform the last integration step. Parameter is false by default, and when set to true must be accompanied by
      *  propagationTerminationFunction_ (which is non-active by default)
      */
@@ -182,7 +213,7 @@ protected:
      *  By default, this function evaluates always to false, so the propagation termination conditions will not be
      *  checked during the integration subteps.
      */
-    boost::function< bool( const double ) > propagationTerminationFunction_ = boost::lambda::constant( false );
+    boost::function< bool( const double, const double ) > propagationTerminationFunction_ = boost::lambda::constant( false );
 };
 
 //! Perform an integration to a specified independent variable value.
@@ -241,9 +272,9 @@ StateType NumericalIntegrator< IndependentVariableType, StateType, StateDerivati
                 }
                 else
                 {
-                    std::cerr<<"Warning, integrateTo function has failed to converge to final time to within tolerances, difference between true and requested final time is "<<
-                        intervalEnd - getCurrentIndependentVariable( ) <<", final time is: "<<
-                               getCurrentIndependentVariable( )<<std::endl;
+                    std::cerr << "Warning, integrateTo function has failed to converge to final time to within tolerances, difference between true and requested final time is " <<
+                        intervalEnd - getCurrentIndependentVariable( ) << ", final time is: " <<
+                               getCurrentIndependentVariable( ) << std::endl;
                 }
             }
         }
