@@ -195,62 +195,9 @@ public:
             const simulation_setup::NamedBodyMap& bodyMap,
             const bool clearNumericalSolutions = true,
             const bool setIntegratedResult = true ):
-        bodyMap_( bodyMap ), integratorSettings_( integratorSettings ),
-        propagatorSettings_( propagatorSettings ), clearNumericalSolutions_( clearNumericalSolutions ),
-        setIntegratedResult_( setIntegratedResult ), propagationTerminationReason_( propagation_never_run )
-    {
-        if( propagatorSettings == NULL )
-        {
-            throw std::runtime_error( "Error in dynamics simulator, propagator settings not defined" );
-        }
-
-        if( integratorSettings == NULL )
-        {
-            throw std::runtime_error( "Error in dynamics simulator, integrator settings not defined" );
-        }
-
-        if( setIntegratedResult_ )
-        {
-            frameManager_ = createFrameManager( bodyMap );
-            integratedStateProcessors_ = createIntegratedStateProcessors< TimeType, StateScalarType >(
-                        propagatorSettings_, bodyMap_, frameManager_ );
-        }
-
-        environmentUpdater_ = createEnvironmentUpdaterForDynamicalEquations< StateScalarType, TimeType >(
-                    propagatorSettings_, bodyMap_ );
-        dynamicsStateDerivative_ = boost::make_shared< DynamicsStateDerivativeModel< TimeType, StateScalarType > >(
-                    createStateDerivativeModels< StateScalarType, TimeType >(
-                        propagatorSettings_, bodyMap_, integratorSettings_->initialTime_  ),
-                    boost::bind( &EnvironmentUpdater< StateScalarType, TimeType >::updateEnvironment,
-                                 environmentUpdater_, _1, _2, _3 ) );
-        propagationTerminationCondition_ = createPropagationTerminationConditions(
-                    propagatorSettings->getTerminationSettings( ), bodyMap_, integratorSettings->initialTimeStep_ );
-
-        if( propagatorSettings_->getDependentVariablesToSave( ) != NULL )
-        {
-            std::pair< boost::function< Eigen::VectorXd( ) >, std::map< int, std::string > > dependentVariableData =
-                    createDependentVariableListFunction< TimeType, StateScalarType >(
-                        propagatorSettings_->getDependentVariablesToSave( ), bodyMap_,
-                        dynamicsStateDerivative_->getStateDerivativeModels( ) );
-            dependentVariablesFunctions_ = dependentVariableData.first;
-            dependentVariableIds_ = dependentVariableData.second;
-
-            if( propagatorSettings_->getDependentVariablesToSave( )->printDependentVariableTypes_ )
-            {
-//                std::cout<<"Dependent variables being saved, output vectors contain: "<<std::endl<<
-//                           "Vector entry, Vector contents"<<std::endl;
-//                utilities::printMapContents(
-//                            dependentVariableIds_ );
-            }
-        }
-
-        stateDerivativeFunction_ =
-                boost::bind( &DynamicsStateDerivativeModel< TimeType, StateScalarType >::computeStateDerivative,
-                             dynamicsStateDerivative_, _1, _2 );
-        doubleStateDerivativeFunction_ =
-                boost::bind( &DynamicsStateDerivativeModel< TimeType, StateScalarType >::computeStateDoubleDerivative,
-                             dynamicsStateDerivative_, _1, _2 );
-    }
+        bodyMap_( bodyMap ),
+        clearNumericalSolutions_( clearNumericalSolutions ),
+        setIntegratedResult_( setIntegratedResult ){ }
 
     //! Virtual destructor
     virtual ~DynamicsSimulator( ) { }
@@ -430,10 +377,10 @@ public:
 
             if( propagatorSettings_->getDependentVariablesToSave( )->printDependentVariableTypes_ )
             {
-//                std::cout << "Dependent variables being saved, output vectors contain: " << std::endl
-//                          << "Vector entry, Vector contents" << std::endl;
-//                utilities::printMapContents(
-//                            dependentVariableIds_ );
+                std::cout << "Dependent variables being saved, output vectors contain: " << std::endl
+                          << "Vector entry, Vector contents" << std::endl;
+                utilities::printMapContents(
+                            dependentVariableIds_ );
             }
         }
 
